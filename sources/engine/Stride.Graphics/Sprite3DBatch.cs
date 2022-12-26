@@ -43,7 +43,7 @@ namespace Stride.Graphics
         /// <param name="rasterizerState">The rasterizer state to use for the batch session</param>
         /// <param name="stencilValue">The value of the stencil buffer to take as reference for the batch session</param>
         /// <param name="viewProjection">The view-projection matrix to use for the batch session</param>
-        public void Begin(GraphicsContext graphicsContext, Matrix viewProjection, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendStateDescription? blendState = null, SamplerState samplerState = null, DepthStencilStateDescription? depthStencilState = null, RasterizerStateDescription? rasterizerState = null, EffectInstance effect = null, int stencilValue = 0)
+        public virtual void Begin(GraphicsContext graphicsContext, Matrix viewProjection, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendStateDescription? blendState = null, SamplerState samplerState = null, DepthStencilStateDescription? depthStencilState = null, RasterizerStateDescription? rasterizerState = null, EffectInstance effect = null, int stencilValue = 0)
         {
             CheckEndHasBeenCalled("begin");
 
@@ -88,6 +88,7 @@ namespace Stride.Graphics
                 ColorAdd = new Color4(0, 0, 0, 0),
                 Swizzle = swizzle,
             };
+            
 
             var matrix = worldMatrix;
             matrix.M11 *= elementSize.X;

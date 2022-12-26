@@ -83,8 +83,9 @@ namespace Stride.Graphics
         protected DepthStencilStateDescription? depthStencilState;
         protected int stencilReferenceValue;
         protected SpriteSortMode sortMode;
-        private ObjectParameterAccessor<Texture>? textureUpdater;
-        private ObjectParameterAccessor<SamplerState>? samplerUpdater;
+
+        protected ObjectParameterAccessor<Texture>? textureUpdater;
+        protected ObjectParameterAccessor<SamplerState>? samplerUpdater;
 
         private int[] sortIndices;
         private ElementInfo[] sortedDraws;
@@ -154,6 +155,21 @@ namespace Stride.Graphics
         /// <value>The parameters.</value>
         public ParameterCollection Parameters => Effect.Parameters;
 
+        protected virtual void PrepareParameters()
+        {
+            textureUpdater = null;
+            if (Effect.Effect.HasParameter(TexturingKeys.Texture0))
+                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Texture0);
+            if (Effect.Effect.HasParameter(TexturingKeys.TextureCube0))
+                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.TextureCube0);
+            if (Effect.Effect.HasParameter(TexturingKeys.Texture3D0))
+                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Texture3D0);
+
+            samplerUpdater = null;
+            if (Effect.Effect.HasParameter(TexturingKeys.Sampler))
+                samplerUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Sampler);
+        }
+
         /// <summary>
         /// Begins a sprite batch rendering using the specified sorting mode and blend state, sampler, depth stencil, rasterizer state objects and a custom effect.
         /// Passing null for any of the state objects selects the default default state objects (BlendState.AlphaBlend, depthStencilState.None, RasterizerState.CullCounterClockwise, SamplerState.LinearClamp).
@@ -188,17 +204,7 @@ namespace Stride.Graphics
             // Force the effect to update
             Effect.UpdateEffect(graphicsDevice);
 
-            textureUpdater = null;
-            if (Effect.Effect.HasParameter(TexturingKeys.Texture0))
-                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Texture0);
-            if (Effect.Effect.HasParameter(TexturingKeys.TextureCube0))
-                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.TextureCube0);
-            if (Effect.Effect.HasParameter(TexturingKeys.Texture3D0))
-                textureUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Texture3D0);
-
-            samplerUpdater = null;
-            if (Effect.Effect.HasParameter(TexturingKeys.Sampler))
-                samplerUpdater = Effect.Parameters.GetAccessor(TexturingKeys.Sampler);
+            PrepareParameters();
 
             // Immediate mode, then prepare for rendering here instead of End()
             if (sessionSortMode == SpriteSortMode.Immediate)
@@ -298,7 +304,7 @@ namespace Stride.Graphics
             isBeginCalled = false;
         }
         
-        private void SortSprites()
+        protected void SortSprites()
         {
             IComparer<int> comparer;
 
@@ -337,7 +343,7 @@ namespace Stride.Graphics
             Array.Sort(sortIndices, 0, drawsQueueCount, comparer);
         }
 
-        private void FlushBatch()
+        protected virtual void FlushBatch()
         {
             ElementInfo[] spriteQueueForBatch;
 
