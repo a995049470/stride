@@ -87,11 +87,11 @@ namespace Stride.Graphics
         protected ObjectParameterAccessor<Texture>? textureUpdater;
         protected ObjectParameterAccessor<SamplerState>? samplerUpdater;
 
-        private int[] sortIndices;
-        private ElementInfo[] sortedDraws;
-        private ElementInfo[] drawsQueue;
-        private int drawsQueueCount;
-        private Texture[] drawTextures;
+        protected int[] sortIndices;
+        protected ElementInfo[] sortedDraws;
+        protected ElementInfo[] drawsQueue;
+        protected int drawsQueueCount;
+        protected Texture[] drawTextures;
 
         private readonly int vertexStructSize;
         private readonly int indexStructSize;
@@ -422,7 +422,7 @@ namespace Stride.Graphics
             DrawBatchPerTextureAndPass(sprites, offset, count);
         }
 
-        private void DrawBatchPerTextureAndPass(ElementInfo[] sprites, int offset, int count)
+        protected void DrawBatchPerTextureAndPass(ElementInfo[] sprites, int offset, int count)
         {
             while (count > 0)
             {
