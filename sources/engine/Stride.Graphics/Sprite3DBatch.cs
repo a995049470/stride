@@ -14,9 +14,9 @@ namespace Stride.Graphics
     /// </summary>
     public class Sprite3DBatch : BatchBase<Sprite3DBatch.Sprite3DDrawInfo>
     {
-        private Matrix transformationMatrix;
-        private Vector4 vector4UnitX = Vector4.UnitX;
-        private Vector4 vector4UnitY = -Vector4.UnitY;
+        protected Matrix transformationMatrix;
+        protected Vector4 vector4UnitX = Vector4.UnitX;
+        protected Vector4 vector4UnitY = -Vector4.UnitY;
 
         /// <summary>
         /// Creates a new instance of <see cref="Sprite3DBatch"/>.
