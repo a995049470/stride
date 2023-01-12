@@ -22,7 +22,7 @@ namespace Stride.Engine
     [DefaultEntityComponentRenderer(typeof(SpriteRenderProcessor))]
     [ComponentOrder(10000)]
     [ComponentCategory("Sprites")]
-    public sealed class SpriteComponent : ActivableEntityComponent
+    public class SpriteComponent : ActivableEntityComponent
     {
         /// <summary>
         /// The group of sprites associated to the component.

@@ -65,7 +65,7 @@ namespace Stride.Rendering.Sprites
         public bool PremultipliedAlpha;
         public Color4 Color;
 
-        internal void CalculateBoundingBox()
+        public void CalculateBoundingBox()
         {
             // update the sprite bounding box
             var halfSpriteSize = Sprite?.Size / 2 ?? Vector2.Zero;
