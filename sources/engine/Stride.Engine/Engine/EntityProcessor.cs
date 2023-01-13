@@ -9,6 +9,7 @@ using Stride.Core;
 using Stride.Core.Annotations;
 using Stride.Core.Collections;
 using Stride.Core.Diagnostics;
+using Stride.Engine.Design;
 using Stride.Games;
 using Stride.Rendering;
 
@@ -181,7 +182,17 @@ namespace Stride.Engine
         /// <returns><c>true</c> if this processor is accepting the component type</returns>
         internal bool Accept(TypeInfo type)
         {
-            return mainTypeInfo.IsAssignableFrom(type);
+            bool disableSuperClassRenderProcessor = type.GetCustomAttribute<DisableSuperClassRenderProcessorAttribute>() != null;
+            bool isAccept;
+            if(disableSuperClassRenderProcessor)
+            {
+                isAccept = mainTypeInfo.Equals(type);
+            }
+            else
+            {
+                isAccept = mainTypeInfo.IsAssignableFrom(type);
+            }
+            return isAccept;
         }
 
         internal bool IsDependentOnComponentType(TypeInfo type)
