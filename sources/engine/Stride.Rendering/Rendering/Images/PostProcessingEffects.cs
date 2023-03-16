@@ -4,10 +4,12 @@ using System;
 using System.ComponentModel;
 using Stride.Core;
 using Stride.Core.Annotations;
+using Stride.Core.Collections;
 using Stride.Core.Mathematics;
 using Stride.Graphics;
 using Stride.Rendering.Compositing;
 using Stride.Rendering.Materials;
+using Stride.Rendering.Rendering.Images;
 
 namespace Stride.Rendering.Images
 {
@@ -60,6 +62,7 @@ namespace Stride.Rendering.Images
             rangeCompress = new ImageEffectShader("RangeCompressorShader");
             rangeDecompress = new ImageEffectShader("RangeDecompressorShader");
             colorTransformsGroup = new ColorTransformGroup();
+            CustomEffects = new FastTrackingCollection<BasePostProcessingEffect>();
         }
 
         /// <summary>
@@ -164,6 +167,9 @@ namespace Stride.Rendering.Images
         [Category]
         public ColorTransformGroup ColorTransforms => colorTransformsGroup;
 
+        [DataMember(71)]
+        public FastTrackingCollection<BasePostProcessingEffect> CustomEffects;
+
         /// <summary>
         /// Gets the antialiasing effect.
         /// </summary>
@@ -222,6 +228,7 @@ namespace Stride.Rendering.Images
             rangeDecompress = ToLoadAndUnload(rangeDecompress);
 
             colorTransformsGroup = ToLoadAndUnload(colorTransformsGroup);
+            
         }
 
         public void Collect(RenderContext context)
