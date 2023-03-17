@@ -19,7 +19,9 @@
     <!-- force generate Resource.designer.cs to namespace Stride.Engine to fix issue #553 -->
     <AndroidResgenNamespace>Stride.Engine</AndroidResgenNamespace>
     <Authors>Stride contributors;Silicon Studio Corp;lin.</Authors>
-    <Description>1.更改spriteRenderFeature</Description>
+    <Description>1.更改spriteRenderFeature
+2.增加自定义后效列表</Description>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>

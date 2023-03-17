@@ -2,6 +2,7 @@
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Stride.Core;
 using Stride.Core.Annotations;
 using Stride.Core.Collections;
@@ -196,6 +197,10 @@ namespace Stride.Rendering.Images
             rangeCompress.Enabled = false;
             rangeDecompress.Enabled = false;
             colorTransformsGroup.Enabled = false;
+            for (int i = 0; i < CustomEffects.Count; i++)
+            {
+                CustomEffects[i].Enabled = false;
+            }
         }
 
         public override void Reset()
@@ -228,7 +233,29 @@ namespace Stride.Rendering.Images
             rangeDecompress = ToLoadAndUnload(rangeDecompress);
 
             colorTransformsGroup = ToLoadAndUnload(colorTransformsGroup);
-            
+
+            for (int i = 0; i < CustomEffects.Count; i++)
+            {
+                CustomEffects[i] = ToLoadAndUnload(CustomEffects[i]);
+            }
+            CustomEffects.CollectionChanged += OnCollectionChanged;
+        }
+
+        private void OnCollectionChanged(object sender, ref FastTrackingCollectionChangedEventArgs e)
+        {
+            if (e.Item is IGraphicsRendererCore effect)
+            {
+                switch (e.Action)
+                {
+                    case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                        ToLoadAndUnload(effect);
+                        break;
+                    case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                        Unload(effect);
+                        break;
+                }
+
+            }
         }
 
         public void Collect(RenderContext context)
@@ -488,6 +515,30 @@ namespace Stride.Rendering.Images
                     LensFlare.SetInput(brightTexture);
                     LensFlare.SetOutput(currentInput);
                     LensFlare.Draw(context);
+                }
+            }
+
+            //执行自定义后效.. 可能顺序需要调整?
+            var customEffectCount = CustomEffects.Count;
+            if(customEffectCount > 0 && InputCount > 0)
+            {
+                var customOutput = NewScopedRenderTarget2D(input.Width, input.Height, input.Format);
+                var inputs = new Texture[InputCount];
+                for (int i = 0; i < InputCount; i++)
+                {
+                    inputs[i] = GetInput(i);
+                }
+                for (int i = 0; i < CustomEffects.Count; i++)
+                {
+                    var effect = CustomEffects[i];
+                    inputs[0] = currentInput;
+                    if (effect.Enabled && effect.IsVaild(inputs, customOutput))
+                    {
+                        effect.Draw(context, inputs, customOutput);
+                        var temp = currentInput;
+                        currentInput = customOutput;
+                        customOutput = temp;
+                    }
                 }
             }
 

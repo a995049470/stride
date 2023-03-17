@@ -18,7 +18,7 @@ namespace Stride.Rendering.Rendering.Images
 
         }
 
-        protected abstract bool IsVaild(Texture[] inputs, Texture output);
+        public abstract bool IsVaild(Texture[] inputs, Texture output);
        
         public void Draw(RenderDrawContext context, Texture[] inputs, Texture output)
         {

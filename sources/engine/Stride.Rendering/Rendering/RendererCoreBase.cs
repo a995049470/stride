@@ -125,6 +125,19 @@ namespace Stride.Rendering
         }
 
         /// <summary>
+        /// Unload Single Effect
+        /// </summary>
+        /// <param name="effect"></param>
+        protected void Unload(IGraphicsRendererCore effect)
+        {
+            bool isSuccessRemove = subRenderersToUnload.Remove(effect);
+            if(isSuccessRemove)
+            {
+                effect.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Unloads this instance on dispose.
         /// </summary>
         protected virtual void Unload()
@@ -206,6 +219,8 @@ namespace Stride.Rendering
             subRenderersToUnload.Add(effect);
             return effect;
         }
+
+        
 
         private void ReleaseAllScopedResources()
         {
