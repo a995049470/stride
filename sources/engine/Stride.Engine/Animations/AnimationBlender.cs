@@ -400,7 +400,7 @@ namespace Stride.Animations
                 };
         }
 
-        internal void FreeIntermediateResult(AnimationClipResult result)
+        public void FreeIntermediateResult(AnimationClipResult result)
         {
             // Returns it to pool of available intermediate results
             lock (availableResultsPool)
