@@ -22,6 +22,7 @@ namespace Stride.Engine
         internal ProfilingKey DrawProfilingKey;
         private readonly TypeInfo mainTypeInfo;
         private readonly Dictionary<TypeInfo, bool> componentTypesSupportedAsRequired;
+        private static Dictionary<TypeInfo, bool> componetTypeDisableSuperClass = new Dictionary<TypeInfo, bool>();
 
         /// <summary>
         /// Tags associated to this entity processor
@@ -182,7 +183,12 @@ namespace Stride.Engine
         /// <returns><c>true</c> if this processor is accepting the component type</returns>
         internal bool Accept(TypeInfo type)
         {
-            bool disableSuperClassRenderProcessor = type.GetCustomAttribute<DisableSuperClassRenderProcessorAttribute>() != null;
+            if(!componetTypeDisableSuperClass.TryGetValue(type, out var disableSuperClassRenderProcessor))
+            {
+                disableSuperClassRenderProcessor = type.GetCustomAttribute<DisableSuperClassRenderProcessorAttribute>() != null;
+                componetTypeDisableSuperClass[type] = disableSuperClassRenderProcessor;
+            }
+            
             bool isAccept;
             if(disableSuperClassRenderProcessor)
             {
