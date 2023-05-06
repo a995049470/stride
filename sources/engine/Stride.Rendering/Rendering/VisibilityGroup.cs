@@ -30,8 +30,8 @@ namespace Stride.Rendering
         // TODO GRAPHICS REFACTOR not thread-safe
         private uint[] viewRenderStageMask;
 
-        internal bool NeedActiveRenderStageReevaluation;
-        internal bool DisableCulling;
+        public bool NeedActiveRenderStageReevaluation;
+        public bool DisableCulling;
 
         public readonly StaticObjectPropertyKey<uint> RenderStageMaskKey;
         public const int RenderStageMaskSizePerEntry = 32; // 32 bits per uint
