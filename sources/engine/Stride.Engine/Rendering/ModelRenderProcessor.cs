@@ -229,6 +229,7 @@ namespace Stride.Rendering
                         Source = modelComponent,
                         RenderModel = renderModel,
                         Mesh = mesh,
+                        ModelFlag = modelComponent.ModelFlag
                     };
 
                     // Update material

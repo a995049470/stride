@@ -1,11 +1,21 @@
 // Copyright (c) .NET Foundation and Contributors (https://dotnetfoundation.org/ & https://stride3d.net) and Silicon Studio Corp. (https://www.siliconstudio.co.jp)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 
+using System;
 using Stride.Core.Mathematics;
 using Stride.Rendering.Materials;
 
 namespace Stride.Rendering
 {
+
+    [Flags]
+    public enum ModelFlag
+    {
+        None = 0,
+        CellBarrier = 1,
+        CellLight = 2,
+    }
+
     /// <summary>
     /// Used by <see cref="MeshRenderFeature"/> to render a <see cref="Rendering.Mesh"/>.
     /// </summary>
@@ -38,5 +48,7 @@ namespace Stride.Rendering
         public Matrix[] BlendMatrices;
 
         public int InstanceCount;
+
+        public ModelFlag ModelFlag;
     }
 }

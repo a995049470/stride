@@ -163,6 +163,9 @@ namespace Stride.Engine
         [DataMemberIgnore]
         public BoundingSphere BoundingSphere;
 
+        [DataMember(35)]
+        public ModelFlag ModelFlag = ModelFlag.None;
+
         /// <summary>
         /// Gets the material at the specified index. If the material is not overriden by this component, it will try to get it from <see cref="Stride.Rendering.Model.Materials"/>
         /// </summary>
