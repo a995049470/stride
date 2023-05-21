@@ -20,7 +20,20 @@ namespace Stride.Rendering.Rendering.Images
 
         public abstract bool IsVaild(Texture[] inputs, Texture output);
        
-        public void Draw(RenderDrawContext context, Texture[] inputs, Texture output)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="inputs">
+        /// 0:ColorTexture
+        /// 1:depthStencil
+        /// 2:normal
+        /// 3:specularRoughness
+        /// 4,5:reflection
+        /// 6:velocity
+        /// </param>
+        /// <param name="output"></param>
+        public virtual void Draw(RenderDrawContext context, Texture[] inputs, Texture output)
         {
             bool isVaild = IsVaild(inputs, output);
             if(isVaild)
