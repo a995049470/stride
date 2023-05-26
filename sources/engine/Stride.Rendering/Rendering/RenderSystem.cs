@@ -125,7 +125,7 @@ namespace Stride.Rendering
             }
 
             // Create nodes for objects to render
-            Dispatcher.ForEach(Views, view =>
+            foreach(var view in Views)
             {
                 // Sort per render feature (used for later sorting)
                 // We'll be able to process data more efficiently for the next steps
@@ -179,10 +179,10 @@ namespace Stride.Rendering
                 foreach (var renderViewStage in view.RenderStages)
                 {
                     renderViewStage.RenderNodes.Close();
-
                     Dispatcher.Sort(renderViewStage.RenderNodes, RenderNodeFeatureReferenceComparer.Default);
+                    
                 }
-            });
+            };
 
             // Finish collection of render feature nodes
             foreach (var renderFeature in RenderFeatures)
