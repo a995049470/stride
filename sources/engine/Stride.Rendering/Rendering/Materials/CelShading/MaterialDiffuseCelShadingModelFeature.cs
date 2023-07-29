@@ -70,5 +70,9 @@ namespace Stride.Rendering.Materials
             hashCode = (hashCode * 397) ^ (IsEnergyConservative.GetHashCode());
             return hashCode;
         }
+        public virtual string GetShadingModelName()
+        {
+            return DefaultShaderSourceConfig.DefaultSurfaceLightingAndShadingShaderSourceName;
+        }
     }
 }

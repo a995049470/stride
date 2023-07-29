@@ -154,5 +154,10 @@ namespace Stride.Rendering.Materials
         {
             yield return ScatteringStrengthStream;
         }
+
+        public virtual string GetShadingModelName()
+        {
+            return DefaultShaderSourceConfig.DefaultSurfaceLightingAndShadingShaderSourceName;
+        }
     }
 }

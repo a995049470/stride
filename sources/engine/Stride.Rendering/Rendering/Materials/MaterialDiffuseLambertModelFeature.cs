@@ -47,5 +47,9 @@ namespace Stride.Rendering.Materials
         {
             return IsEnergyConservative.GetHashCode();
         }
+        public virtual string GetShadingModelName()
+        {
+            return DefaultShaderSourceConfig.DefaultSurfaceLightingAndShadingShaderSourceName;
+        }
     }
 }

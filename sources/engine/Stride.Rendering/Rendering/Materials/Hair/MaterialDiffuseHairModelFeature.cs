@@ -167,5 +167,9 @@ namespace Stride.Rendering.Materials
                 return hashCode;
             }
         }
+        public virtual string GetShadingModelName()
+        {
+            return DefaultShaderSourceConfig.DefaultSurfaceLightingAndShadingShaderSourceName;
+        }
     }
 }

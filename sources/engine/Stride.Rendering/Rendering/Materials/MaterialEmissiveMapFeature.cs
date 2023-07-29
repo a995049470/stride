@@ -91,5 +91,9 @@ namespace Stride.Rendering.Materials
         {
             yield return EmissiveStream;
         }
+        public virtual string GetShadingModelName()
+        {
+            return DefaultShaderSourceConfig.DefaultSurfaceLightingAndShadingShaderSourceName;
+        }
     }
 }

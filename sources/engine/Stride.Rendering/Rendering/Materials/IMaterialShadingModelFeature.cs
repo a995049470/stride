@@ -11,5 +11,6 @@ namespace Stride.Rendering.Materials
     /// </summary>
     public interface IMaterialShadingModelFeature : IMaterialFeature, IEquatable<IMaterialShadingModelFeature>
     {
+        string GetShadingModelName();
     }
 }
